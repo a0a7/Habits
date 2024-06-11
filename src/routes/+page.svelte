@@ -1,30 +1,22 @@
 <script lang="ts">
-    import { SignIn, SignOut } from "@auth/sveltekit/components"
+    import { signIn, signOut } from "@auth/sveltekit/client"
     import { page } from "$app/stores"
+    
+    import Button from "$lib/components/ui/button/button.svelte";
+    import * as Avatar from "$lib/components/ui/avatar";
   </script>
    
-<h1>SvelteKit Auth Example</h1>
-<div>
-{#if $page.data.session}
-    {#if $page.data.session.user?.image}
-    <img
-        src={$page.data.session.user.image}
-        class="avatar"
-        alt="User Avatar"
-    />
+<div class="flex flex-col items-center content-center justify-center font-mono h-screen">
+    {#if $page.data.session}
+        {#if $page.data.session.user?.image}
+            <Avatar.Root>
+                <Avatar.Image src={$page.data.session.user.image} class="avatar" alt="@User Avatar" />
+            </Avatar.Root>
+        {/if}
+        <p class="py-2">Signed in as {$page.data.session.user?.name ?? "Unknown Username"}</p>
+        <Button on:click={() => signOut()}>Sign out</Button>
+    {:else}
+        <p class="py-2">You are not signed in</p>
+        <Button on:click={() => signIn("google")}>Sign in</Button>
     {/if}
-    <span class="signedInText">
-    <small>Signed in as</small><br />
-    <strong>{$page.data.session.user?.name ?? "User"}</strong>
-    </span>
-    <SignOut>
-    <div slot="submitButton" class="buttonPrimary">Sign out</div>
-    </SignOut>
-{:else}
-    <span class="notSignedInText">You are not signed in</span>
-    <SignIn>
-    <div slot="submitButton" class="buttonPrimary">Sign in</div>
-    </SignIn>
-    <SignIn provider="google"/>
-{/if}
 </div>
