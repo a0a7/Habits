@@ -73,9 +73,6 @@ devDependencies:
   autoprefixer:
     specifier: ^10.4.19
     version: 10.4.19(postcss@8.4.38)
-  eslint:
-    specifier: ^9.0.0
-    version: 9.4.0
   eslint-config-prettier:
     specifier: ^9.1.0
     version: 9.1.0(eslint@9.4.0)
